@@ -1,0 +1,9 @@
+# never commit real transcripts — only the bundled synthetic example ships
+data/*.json
+!data/example-index.json
+export/
+uploads/
+sources.json
+tools/output/
+node_modules/
+.DS_Store

@@ -1,0 +1,7 @@
+{
+  "name": "transcrub-tools",
+  "private": true,
+  "type": "module",
+  "description": "Export your OWN Claude conversations (with extended thinking) to JSON, via your logged-in browser over CDP.",
+  "dependencies": { "puppeteer-core": "^23.0.0" }
+}

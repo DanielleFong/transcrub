@@ -1,0 +1,44 @@
+# transcrub
+
+A local, private **co-reading scrubber** for your AI chat transcripts. Merge transcripts
+from multiple sources into one chronological timeline, scroll through them with full
+context, **see extended-thinking blocks**, and leave margin notes ("marks") — yours and
+the model's — pinned to individual turns.
+
+Runs entirely on `127.0.0.1`. **Your transcripts never leave your machine.**
+
+![corpora as colored bands on a filmstrip; a reading feed in the center; a margin of marks on the right]
+
+## Quick start (with bundled example data)
+```sh
+./serve.sh            # http://localhost:8791/coread.html
+```
+Open it — a synthetic 3-source example loads so you can try the scrubber immediately.
+
+## Use it on your own transcripts
+1. `cp sources.example.json sources.json` and point each entry at your data:
+   - `claude-code` — Claude Code `.jsonl` sessions (`~/.claude/projects`)
+   - `claude-json` — conversation JSON with a `chat_messages[]` array (export / API shape; keeps thinking)
+   - `text` — plain-text transcripts (best-effort)
+2. `python3 scan.py` → builds `data/index.json`
+3. `./serve.sh`
+
+To export your **own** Claude conversations *with* extended thinking (which the share/export
+drops), see [`tools/`](tools/README.md).
+
+## What you can do
+- **Corpora** are colored bands; filter them with the chips. **operator-own** vs **testimony**
+  (other people's transcripts) are tagged as distinct evidentiary classes and never blended.
+- **thinking only** isolates turns that carry reasoning blocks.
+- Scroll the **feed** for context (preceding + current + following); the current turn advances
+  when you reach its bottom. Arrows / filmstrip-click / marks smooth-scroll to a turn.
+- **Marks**: pin a note to any turn (author = you or the model). Saved to your browser,
+  exportable to markdown. Seed marks live in the `SEEDS` array in `coread.html`.
+
+## Privacy
+`data/` (except the synthetic example), `sources.json`, `export/`, `uploads/`, and
+`tools/output/` are gitignored. The viewer binds to localhost only. Don't deploy a build
+that contains real transcripts to a public URL without your own auth in front of it.
+
+## License
+MIT

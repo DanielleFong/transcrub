@@ -1,0 +1,5 @@
+[
+  {"corpus": "cli",       "klass": "operator-own", "type": "claude-code", "path": "~/.claude/projects"},
+  {"corpus": "web",       "klass": "operator-own", "type": "claude-json", "path": "./export"},
+  {"corpus": "community", "klass": "testimony",    "type": "text",        "path": "./uploads"}
+]
