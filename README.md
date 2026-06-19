@@ -9,11 +9,14 @@ Runs entirely on `127.0.0.1`. **Your transcripts never leave your machine.**
 
 ![corpora as colored bands on a filmstrip; a reading feed in the center; a margin of marks on the right]
 
-## Quick start (with bundled example data)
+## See it in your browser
+**Live demo (no install):** https://daniellefong.github.io/transcrub/ — loads synthetic example data.
+
+**Run locally** (zero dependencies — just Python 3):
 ```sh
-./serve.sh            # http://localhost:8791/coread.html
+git clone https://github.com/DanielleFong/transcrub && cd transcrub
+python3 run.py        # builds your index if sources.json exists, else example; opens your browser
 ```
-Open it — a synthetic 3-source example loads so you can try the scrubber immediately.
 
 ## Use it on your own transcripts
 1. `cp sources.example.json sources.json` and point each entry at your data:
