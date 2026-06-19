@@ -7,7 +7,9 @@ the model's — pinned to individual turns.
 
 Runs entirely on `127.0.0.1`. **Your transcripts never leave your machine.**
 
-![corpora as colored bands on a filmstrip; a reading feed in the center; a margin of marks on the right]
+![transcrub — smart-scroll demo](assets/demo.gif)
+
+*Smart-scroll through a conversation: graphite reading feed, extended-thinking blocks (purple), margin marks. Demo runs on synthetic data.*
 
 ## See it in your browser
 **Live demo (no install):** https://daniellefong.github.io/transcrub/ — loads synthetic example data.
