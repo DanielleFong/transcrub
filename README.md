@@ -24,6 +24,7 @@ python3 run.py        # builds your index if sources.json exists, else example; 
 1. `cp sources.example.json sources.json` and point each entry at your data:
    - `claude-code` — Claude Code `.jsonl` sessions (`~/.claude/projects`)
    - `claude-json` — conversation JSON with a `chat_messages[]` array (export / API shape; keeps thinking)
+   - `chatgpt` — ChatGPT data-export `conversations.json` (follows the active branch, ignores regenerated ones)
    - `text` — plain-text transcripts (best-effort)
 2. `python3 scan.py` → builds `data/index.json`
 3. `./serve.sh`
