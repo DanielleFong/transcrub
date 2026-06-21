@@ -11,6 +11,8 @@ types:
   claude-code  — Claude Code .jsonl session transcripts (recursive)
   claude-json  — conversation JSON with a chat_messages[] array (export / API shape),
                  including extended-thinking blocks when present
+  chatgpt      — ChatGPT data export conversations.json (mapping graph; follows the
+                 active branch via current_node, falls back to create_time order)
   text         — plain-text transcripts, best-effort turn split
 
 Output: data/index.json (chronological; each conversation contiguous). The bundled
@@ -106,7 +108,67 @@ def load_text(corpus, klass, root):
                         "model": "", "prompt": "", "thinking": "", "reply": body, "tools": [], "speaker": "assistant"})
     return out
 
-LOADERS = {"claude-code": load_claude_code, "claude-json": load_claude_json, "text": load_text}
+# ---- chatgpt (conversations.json export, mapping graph) ----
+def load_chatgpt(corpus, klass, root):
+    out = []
+    # Accept the export's conversations.json plus any other *.json that turns out
+    # to hold conversation objects (the `mapping` check below skips non-ChatGPT json).
+    files = []
+    for pat in ("conversations.json", "*.json"):
+        files += glob.glob(os.path.join(root, "**", pat), recursive=True)
+    for f in list(dict.fromkeys(files)):
+        try: data = json.load(open(f))
+        except Exception: continue
+        convs = data if isinstance(data, list) else [data]
+        for conv in convs:
+            if not isinstance(conv, dict): continue
+            mapping = conv.get("mapping")
+            if not isinstance(mapping, dict): continue
+            name = conv.get("title") or os.path.basename(f)
+            cid = conv.get("conversation_id") or conv.get("id") or name
+            # Order the active branch: walk current_node -> root via parent pointers
+            # (skips regenerated branches), else fall back to create_time order.
+            node = conv.get("current_node")
+            if node and node in mapping:
+                chain, guard = [], 0
+                while node and node in mapping and guard < 100000:
+                    chain.append(mapping[node]); node = mapping[node].get("parent"); guard += 1
+                ordered = list(reversed(chain))
+            else:
+                ordered = sorted(mapping.values(),
+                                 key=lambda n: ((n.get("message") or {}).get("create_time") or 0))
+            model, cur = "", None
+            for nd in ordered:
+                m = nd.get("message") if isinstance(nd, dict) else None
+                if not isinstance(m, dict): continue
+                role = (m.get("author") or {}).get("role")
+                content = m.get("content") or {}
+                parts = content.get("parts") if isinstance(content, dict) else None
+                text = "\n".join(p for p in parts if isinstance(p, str)).strip() if isinstance(parts, list) else ""
+                slug = (m.get("metadata") or {}).get("model_slug")
+                if slug: model = slug
+                ct = m.get("create_time")
+                ts = datetime.datetime.fromtimestamp(ct, datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S") if isinstance(ct, (int, float)) else ""
+                if role == "user":
+                    if not text: continue
+                    if cur: out.append(cur)
+                    cur = {"corpus": corpus, "klass": klass, "source": cid, "title": name,
+                           "ts": ts, "model": model, "prompt": text, "thinking": "",
+                           "reply": "", "tools": [], "speaker": "user"}
+                elif role == "assistant":
+                    if cur is None:
+                        cur = {"corpus": corpus, "klass": klass, "source": cid, "title": name,
+                               "ts": ts, "model": model, "prompt": "", "thinking": "",
+                               "reply": "", "tools": [], "speaker": "assistant"}
+                    if text: cur["reply"] = (cur["reply"] + "\n\n" + text).strip()
+                    if model: cur["model"] = model
+                elif role == "tool" and cur is not None:
+                    cur["tools"].append((m.get("author") or {}).get("name") or "tool")
+            if cur: out.append(cur)
+    return out
+
+LOADERS = {"claude-code": load_claude_code, "claude-json": load_claude_json,
+           "chatgpt": load_chatgpt, "text": load_text}
 
 def main():
     cfg = "sources.json"
