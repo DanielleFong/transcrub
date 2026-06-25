@@ -9,7 +9,7 @@ Runs entirely on `127.0.0.1`. **Your transcripts never leave your machine.**
 
 ![transcrub — smart-scroll demo](assets/demo.gif)
 
-*Smart-scroll through a conversation: graphite reading feed, extended-thinking blocks (purple), margin marks. Demo runs on synthetic data.*
+*Walkthrough: open a conversation, smart-scroll through it (extended-thinking blocks in purple), jump to a margin mark, search, and pin your own note. Runs on synthetic data — [mp4](assets/demo.mp4).*
 
 ## See it in your browser
 **Live demo (no install):** https://daniellefong.github.io/transcrub/ — loads synthetic example data.

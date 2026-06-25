@@ -129,10 +129,10 @@ let CMAP={};
 const ccol=c=>CMAP[c]||"var(--mut)";
 // Seed marks: anchored by (corpus, titleContains, bodyContains) so they survive reindex.
 const SEEDS=[
- {c:"web-chat",title:"compression",body:"valid compression",who:"claude",
-  note:"Example seeded mark. Both reader and model can pin marks to a turn; they show as white ticks on the filmstrip and jump from this margin. Points at the 'valid compression' distinction. Edit the SEEDS array in coread.html to seed your own."},
+ {c:"web-chat",title:"notebook",body:"retrieval",who:"claude",
+  note:"Example seeded mark. Both reader and model can pin a note to a turn; marks show as ticks on the filmstrip and jump from this margin. This one points at the retrieval principle. Edit the SEEDS array in coread.html to seed your own."},
  {c:"community",title:"alex",body:"riff a dozen",who:"me",
-  note:"Example reader mark on the testimony corpus. Marks you add are saved in your browser (localStorage) and can be exported to markdown with the button below."},
+  note:"Example reader mark (testimony corpus). Marks you add are saved in your browser (localStorage) and exported to markdown with the button below."},
 ];
 const S={all:[],view:[],i:0,corpora:[],corp:{},q:"",src:null,marks:[],thinkOnly:false,stepMode:"turn"};
 
