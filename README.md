@@ -9,7 +9,7 @@ Runs entirely on `127.0.0.1`. **Your transcripts never leave your machine.**
 
 ![transcrub — smart-scroll demo](assets/demo.gif)
 
-*Walkthrough: open a conversation, smart-scroll through it (extended-thinking blocks in purple), jump to a margin mark, search, and pin your own note. Runs on synthetic data — [mp4](assets/demo.mp4).*
+*Walkthrough on a synthetic Lightcell example: open the conversation, smart-scroll through the reasoning (thinking blocks in purple), jump to a margin mark, search, and pin a note. A few easter eggs are hidden in the marks — [mp4](assets/demo.mp4).*
 
 ## See it in your browser
 **Live demo (no install):** https://daniellefong.github.io/transcrub/ — loads synthetic example data.

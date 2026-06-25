@@ -129,10 +129,12 @@ let CMAP={};
 const ccol=c=>CMAP[c]||"var(--mut)";
 // Seed marks: anchored by (corpus, titleContains, bodyContains) so they survive reindex.
 const SEEDS=[
- {c:"web-chat",title:"notebook",body:"retrieval",who:"claude",
-  note:"Example seeded mark. Both reader and model can pin a note to a turn; marks show as ticks on the filmstrip and jump from this margin. This one points at the retrieval principle. Edit the SEEDS array in coread.html to seed your own."},
- {c:"community",title:"alex",body:"riff a dozen",who:"me",
-  note:"Example reader mark (testimony corpus). Marks you add are saved in your browser (localStorage) and exported to markdown with the button below."},
+ {c:"lab",title:"Dyson",body:"589 nm is the sodium D",who:"claude",
+  note:"the scrub cursor you've been dragging is sodium-hot \u2014 589 nm, the sodium D line itself. the instrument is the plate. (the faint mark, bottom-left, isn't decoration either.)"},
+ {c:"lab",title:"Dyson",body:"laundering the hard part",who:"claude",
+  note:"watch the thinking block catch itself: 'don't launder the hard part into a footnote.' the catch lives in the reasoning \u2014 which is exactly what transcrub keeps and most tools throw away."},
+ {c:"field",title:"fox",body:"birth certificate",who:"me",
+  note:"\ud83e\udd8a hello, Fable."},
 ];
 const S={all:[],view:[],i:0,corpora:[],corp:{},q:"",src:null,marks:[],thinkOnly:false,stepMode:"turn"};
 
